@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:id="@+id/movieToolbar"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/dark_grey"
+        android:paddingLeft="@dimen/_16sdp"
+        android:paddingRight="@dimen/_16sdp">
+
+    <TextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_17ssp"
+            android:gravity="center_vertical"
+            android:text="@string/app_name"/>
+</androidx.appcompat.widget.Toolbar>
