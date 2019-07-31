@@ -5,9 +5,15 @@
              android:layout_height="match_parent"
              tools:context=".presentation.movie.MovieFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMovieFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/text_title_movie"/>
+            android:layout_height="match_parent"/>
 
+    <ProgressBar
+            android:id="@+id/pbMainMovie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
 </FrameLayout>

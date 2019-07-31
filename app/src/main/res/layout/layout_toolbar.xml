@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:id="@+id/movieToolbar"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/dark_grey"
+        android:background="@color/black"
         android:paddingLeft="@dimen/_16sdp"
         android:paddingRight="@dimen/_16sdp">
 

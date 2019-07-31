@@ -3,11 +3,11 @@ package com.andriiginting.jetpackpro.data.model
 import com.andriiginting.jetpackpro.data.BaseResponse
 import com.google.gson.annotations.SerializedName
 
-data class MovieResponse(
-    @SerializedName("results") val resultsIntent: List<MovieItem>
+data class TvResponse(
+    @SerializedName("results") val resultsIntent: List<TvItem>
 ): BaseResponse()
 
-data class MovieItem(
+data class TvItem(
     @SerializedName("id") val id: String,
     @SerializedName("movie_id") val movieId: String,
     @SerializedName("original_title") val title: String,

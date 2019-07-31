@@ -11,21 +11,18 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 object DicodingClient {
-    private var retrofit: Retrofit? = null
     fun getRetrofitClient(): Retrofit? {
-        if (retrofit == null) {
-            retrofit = Retrofit.Builder()
-                .baseUrl(BuildConfig.MOVIE_HOST)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient())
-                .build()
-        }
-        return retrofit
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.MOVIE_HOST)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient())
+            .build()
     }
 
     private fun okHttpClient(): OkHttpClient {
-       return OkHttpClient.Builder()
+        return OkHttpClient.Builder()
+            .retryOnConnectionFailure(true)
             .addInterceptor(createLoggingInterceptor())
             .addInterceptor(defaultHTTPClient())
             .pingInterval(30, TimeUnit.SECONDS)

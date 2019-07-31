@@ -5,9 +5,15 @@
              android:layout_height="match_parent"
              tools:context=".presentation.tv.TvShowFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTvFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/text_title_tvshow"/>
+            android:layout_height="match_parent"/>
 
+    <ProgressBar
+            android:id="@+id/pbTvShow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
 </FrameLayout>
