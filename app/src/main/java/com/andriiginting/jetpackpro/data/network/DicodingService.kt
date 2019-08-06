@@ -19,8 +19,14 @@ interface DicodingService {
     fun getPopularTvShow(@Query("api_key") apiKey: String): Single<TvResponse>
 
     @GET(SIMILAR_TV_POPULAR)
-    fun getSimilarTvShow(@Path("tv_id") tvId: String) : Single<TvResponse>
+    fun getSimilarTvShow(
+        @Path("tv_id") tvId: String,
+        @Query("api_key") apiKey: String
+    ) : Single<MovieResponse>
 
     @GET(SIMILAR_MOVIE_POPULAR)
-    fun getSimilarMovie(@Path("movie_id") movieId: String): Single<MovieResponse>
+    fun getSimilarMovie(
+        @Path("movie_id") movieId: String,
+        @Query("api_key") apiKey: String
+    ): Single<MovieResponse>
 }

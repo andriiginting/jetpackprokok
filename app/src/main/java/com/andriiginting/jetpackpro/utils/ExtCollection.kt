@@ -3,6 +3,7 @@ package com.andriiginting.jetpackpro.utils
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.reactivex.SingleTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -26,10 +27,10 @@ infix fun CompositeDisposable.plus(d: Disposable?): CompositeDisposable {
     return this
 }
 
-fun View.visible() {
+fun View.makeVisible() {
     visibility = View.VISIBLE
 }
 
-fun View.gone() {
+fun View.makeGone() {
     visibility = View.GONE
 }

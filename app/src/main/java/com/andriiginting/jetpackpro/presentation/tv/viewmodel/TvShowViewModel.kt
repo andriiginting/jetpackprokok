@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andriiginting.jetpackpro.BuildConfig
 import com.andriiginting.jetpackpro.base.BaseViewModel
+import com.andriiginting.jetpackpro.data.model.MovieResponse
 import com.andriiginting.jetpackpro.data.model.TvResponse
 import com.andriiginting.jetpackpro.data.network.DicodingClient
 import com.andriiginting.jetpackpro.data.network.DicodingService

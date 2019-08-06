@@ -8,4 +8,6 @@
     <color name="black">#131313</color>
     <color name="dark_grey">#212531</color>
     <color name="red">#991414</color>
+
+    <color name="transparent">#80000000</color>
 </resources>

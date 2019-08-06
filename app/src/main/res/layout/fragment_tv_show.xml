@@ -16,4 +16,12 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             android:layout_gravity="center"/>
+
+    <include
+            android:id="@+id/layoutError"
+            layout="@layout/layout_error"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="gone"/>
 </FrameLayout>

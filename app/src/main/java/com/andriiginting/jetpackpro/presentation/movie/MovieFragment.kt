@@ -13,12 +13,14 @@ import com.andriiginting.jetpackpro.base.BaseAdapter
 import com.andriiginting.jetpackpro.data.model.MovieItem
 import com.andriiginting.jetpackpro.data.model.MovieResponse
 import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScreenActivity.Companion.MOVIE_KEY
+import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScreenActivity.Companion.MOVIE_TYPE
+import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScreenActivity.Companion.SCREEN_TYPE
 import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScreenActivity.Companion.navigate
 import com.andriiginting.jetpackpro.presentation.movie.viewmodel.MovieState
 import com.andriiginting.jetpackpro.presentation.movie.viewmodel.MovieViewModel
-import com.andriiginting.jetpackpro.utils.gone
+import com.andriiginting.jetpackpro.utils.makeGone
+import com.andriiginting.jetpackpro.utils.makeVisible
 import com.andriiginting.jetpackpro.utils.setGridView
-import com.andriiginting.jetpackpro.utils.visible
 import kotlinx.android.synthetic.main.fragment_movie.*
 
 class MovieFragment : Fragment() {
@@ -70,9 +72,13 @@ class MovieFragment : Fragment() {
             when (state) {
                 is MovieState.ShowLoading -> showLoading()
                 is MovieState.HideLoading -> hideLoading()
-                is MovieState.LoadMovieSuccess -> loadData(state.data)
+                is MovieState.LoadMovieSuccess -> {
+                    loadData(state.data)
+                    hideErrorScreen()
+                }
                 is MovieState.LoadMovieError -> {
                     hideLoading()
+                    showErrorScreen()
                 }
             }
         })
@@ -83,13 +89,20 @@ class MovieFragment : Fragment() {
         movieList = items.resultsIntent
     }
 
-    private fun showLoading() = pbMainMovie.visible()
+    private fun showErrorScreen() = layoutError.makeVisible()
 
-    private fun hideLoading() = pbMainMovie.gone()
+    private fun hideErrorScreen() = layoutError.makeGone()
 
-    private fun navigateTo(pos: Int) {
+    private fun showLoading() = pbMainMovie.makeVisible()
+
+    private fun hideLoading() = pbMainMovie.makeGone()
+
+    private fun navigateTo(position: Int) {
         startActivity(navigate(requireActivity())
-            .apply { putExtra(MOVIE_KEY, pos) }
+            .apply {
+                putExtra(MOVIE_KEY, movieList?.get(position))
+                putExtra(SCREEN_TYPE, MOVIE_TYPE)
+            }
         )
     }
 

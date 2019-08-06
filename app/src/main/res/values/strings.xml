@@ -4,4 +4,7 @@
     <string name="text_title_movie">Movie</string>
     <string name="text_title_tvshow">Tv Shows</string>
     <string name="poster_description">Poster</string>
+    <string name="image_backdrop_detail">image backdrop</string>
+    <string name="more_like_this">More Like This</string>
+    <string name="error_string">Sorry, We\'re trying to fix it</string>
 </resources>

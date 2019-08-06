@@ -1,18 +1,22 @@
 package com.andriiginting.jetpackpro.data.model
 
+import android.os.Parcelable
 import com.andriiginting.jetpackpro.data.BaseResponse
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class MovieResponse(
-    @SerializedName("results") val resultsIntent: List<MovieItem>
-): BaseResponse()
+    @SerializedName("results") var resultsIntent: MutableList<MovieItem> = mutableListOf()
+) : BaseResponse(), Parcelable
 
+@Parcelize
 data class MovieItem(
-    @SerializedName("id") val id: String,
-    @SerializedName("movie_id") val movieId: String,
-    @SerializedName("original_title") val title: String,
-    @SerializedName("poster_path") val posterPath: String,
-    @SerializedName("overview") val overview: String,
-    @SerializedName("backdrop_path") val backdropPath: String,
-    @SerializedName("release_date") val releaseDate: String
-)
+    @SerializedName("id") var id: String = "",
+    @SerializedName("movie_id") var movieId: String = "",
+    @SerializedName("original_title") var title: String = "",
+    @SerializedName("poster_path") var posterPath: String = "",
+    @SerializedName("overview") var overview: String = "",
+    @SerializedName("backdrop_path") var backdropPath: String = "",
+    @SerializedName("release_date") var releaseDate: String = ""
+) : Parcelable

@@ -6,22 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.andriiginting.jetpackpro.R
 import com.andriiginting.jetpackpro.base.BaseAdapter
 import com.andriiginting.jetpackpro.data.model.MovieItem
 import com.andriiginting.jetpackpro.data.model.TvItem
 import com.andriiginting.jetpackpro.data.model.TvResponse
+import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScreenActivity
 import com.andriiginting.jetpackpro.presentation.movie.MovieViewHolder
-import com.andriiginting.jetpackpro.presentation.movie.viewmodel.MovieState
-import com.andriiginting.jetpackpro.presentation.movie.viewmodel.MovieViewModel
 import com.andriiginting.jetpackpro.presentation.tv.viewmodel.TvShowViewModel
 import com.andriiginting.jetpackpro.presentation.tv.viewmodel.TvState
-import com.andriiginting.jetpackpro.utils.gone
+import com.andriiginting.jetpackpro.utils.makeGone
+import com.andriiginting.jetpackpro.utils.makeVisible
 import com.andriiginting.jetpackpro.utils.setGridView
-import com.andriiginting.jetpackpro.utils.visible
+import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.android.synthetic.main.fragment_tv_show.*
+import kotlinx.android.synthetic.main.fragment_tv_show.layoutError
 
 class TvShowFragment : Fragment() {
     companion object {
@@ -36,7 +36,7 @@ class TvShowFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel =ViewModelProviders
+        viewModel = ViewModelProviders
             .of(this)
             .get(TvShowViewModel::class.java)
         initData()
@@ -56,42 +56,73 @@ class TvShowFragment : Fragment() {
         setupData()
     }
 
-    private fun initData(){
+    private fun initData() {
         viewModel.getTvShow()
     }
 
-    private fun setupData(){
+    private fun setupData() {
         rvTvFragment.apply {
             setGridView(GRID_COLUMN)
             adapter = tvAdapter
         }
     }
 
-    private fun loadData(items: TvResponse){
+    private fun loadData(items: TvResponse) {
         tvAdapter.addAll(items.resultsIntent)
         showList = items.resultsIntent
     }
 
-    private fun setupAdapter(){
+    private fun setupAdapter() {
         tvAdapter = BaseAdapter({ parent, _ ->
-            MovieViewHolder.inflate(parent)
+            MovieViewHolder.inflate(parent).also {
+                it.setPosterAction(::navigateTo)
+            }
         }, { viewHolder, _, item ->
             viewHolder.setPoster(item.posterPath)
         })
     }
 
-    private fun showLoading() = pbTvShow.visible()
+    private fun showLoading() = pbTvShow.makeVisible()
 
-    private fun hideLoading() = pbTvShow.gone()
+    private fun hideLoading() = pbTvShow.makeGone()
 
-    private fun initObserver(){
+    private fun showErrorScreen() = layoutError.makeVisible()
+
+    private fun hideErrorScreen() = layoutError.makeGone()
+
+    private fun navigateTo(position: Int) {
+        val item = showList?.get(position)
+        startActivity(
+            DetailScreenActivity.navigate(requireActivity())
+                .apply {
+                    putExtra(
+                        DetailScreenActivity.MOVIE_KEY, MovieItem(
+                            id = item?.id.orEmpty(),
+                            movieId = item?.id.orEmpty(),
+                            posterPath = item?.posterPath.orEmpty(),
+                            overview = item?.overview.orEmpty(),
+                            title = item?.title.orEmpty(),
+                            backdropPath = item?.backdropPath.orEmpty(),
+                            releaseDate = item?.releaseDate.orEmpty()
+                        )
+                    )
+                    putExtra(DetailScreenActivity.SCREEN_TYPE, DetailScreenActivity.TV_TYPE)
+                }
+        )
+    }
+
+    private fun initObserver() {
         viewModel.state.observe(this, Observer { state ->
-            when(state) {
+            when (state) {
                 is TvState.ShowLoading -> showLoading()
                 is TvState.HideLoading -> hideLoading()
-                is TvState.LoadMovieSuccess -> loadData(state.data)
+                is TvState.LoadMovieSuccess -> {
+                    loadData(state.data)
+                    hideErrorScreen()
+                }
                 is TvState.LoadMovieError -> {
                     hideLoading()
+                    showErrorScreen()
                 }
             }
         })
