@@ -1,11 +1,10 @@
-package com.andriiginting.jetpackpro.data
+package com.andriiginting.jetpackpro.data.repository
 
 import com.andriiginting.jetpackpro.data.model.MovieItem
 import com.andriiginting.jetpackpro.data.model.MovieResponse
 import com.andriiginting.jetpackpro.data.model.TvItem
 import com.andriiginting.jetpackpro.data.model.TvResponse
 import com.andriiginting.jetpackpro.data.network.DicodingService
-import com.andriiginting.jetpackpro.data.repository.HomeRepository
 import com.andriiginting.jetpackpro.helper.TrampolineSchedulerRX
 import com.andriiginting.jetpackpro.helper.load
 import com.nhaarman.mockito_kotlin.*
