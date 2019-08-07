@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andriiginting.jetpackpro.BuildConfig
 import com.andriiginting.jetpackpro.R
+import com.andriiginting.jetpackpro.utils.loadImage
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.layout_movie_item_component.view.*
 

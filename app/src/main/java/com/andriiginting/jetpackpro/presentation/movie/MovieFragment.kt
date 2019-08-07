@@ -12,16 +12,22 @@ import com.andriiginting.jetpackpro.R
 import com.andriiginting.jetpackpro.base.BaseAdapter
 import com.andriiginting.jetpackpro.data.model.MovieItem
 import com.andriiginting.jetpackpro.data.model.MovieResponse
+import com.andriiginting.jetpackpro.data.network.DicodingClient
+import com.andriiginting.jetpackpro.data.network.DicodingService
+import com.andriiginting.jetpackpro.data.repository.HomeRepository
 import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScreenActivity.Companion.MOVIE_KEY
 import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScreenActivity.Companion.MOVIE_TYPE
 import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScreenActivity.Companion.SCREEN_TYPE
 import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScreenActivity.Companion.navigate
 import com.andriiginting.jetpackpro.presentation.movie.viewmodel.MovieState
 import com.andriiginting.jetpackpro.presentation.movie.viewmodel.MovieViewModel
+import com.andriiginting.jetpackpro.presentation.movie.viewmodel.MovieViewModelFactory
 import com.andriiginting.jetpackpro.utils.makeGone
 import com.andriiginting.jetpackpro.utils.makeVisible
+import com.andriiginting.jetpackpro.utils.provideService
 import com.andriiginting.jetpackpro.utils.setGridView
 import kotlinx.android.synthetic.main.fragment_movie.*
+import java.io.File
 
 class MovieFragment : Fragment() {
     companion object {
@@ -37,7 +43,7 @@ class MovieFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders
-            .of(this)
+            .of(this, MovieViewModelFactory(HomeRepository(provideService())))
             .get(MovieViewModel::class.java)
         initData()
         initObserver()

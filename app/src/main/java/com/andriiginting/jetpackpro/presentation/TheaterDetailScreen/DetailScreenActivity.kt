@@ -12,10 +12,9 @@ import com.andriiginting.jetpackpro.base.BaseActivity
 import com.andriiginting.jetpackpro.base.BaseAdapter
 import com.andriiginting.jetpackpro.data.model.MovieItem
 import com.andriiginting.jetpackpro.data.model.MovieResponse
+import com.andriiginting.jetpackpro.data.repository.DetailScreenRepository
 import com.andriiginting.jetpackpro.presentation.movie.MovieViewHolder
-import com.andriiginting.jetpackpro.utils.makeGone
-import com.andriiginting.jetpackpro.utils.makeVisible
-import com.andriiginting.jetpackpro.utils.setGridView
+import com.andriiginting.jetpackpro.utils.*
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_detail_screen.*
 import kotlinx.android.synthetic.main.activity_detail_screen.layoutError
@@ -42,7 +41,7 @@ class DetailScreenActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         vm = ViewModelProviders
-            .of(this)
+            .of(this, TheaterDetailViewModelFactory(DetailScreenRepository(provideService())))
             .get(TheaterDetailViewModel::class.java)
         initObserver()
 
@@ -81,11 +80,7 @@ class DetailScreenActivity : BaseActivity() {
             onBackPressed()
             finish()
         }
-
-        Glide.with(baseContext)
-            .load(BuildConfig.MOVIE_IMAGE_URL+data?.backdropPath)
-            .centerCrop()
-            .into(ivPosterBackdrop)
+        ivPosterBackdrop.loadImage(data?.backdropPath.orEmpty())
     }
 
     private fun setupSimilarScreen() {

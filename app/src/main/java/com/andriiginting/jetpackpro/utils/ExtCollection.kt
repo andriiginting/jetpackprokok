@@ -1,9 +1,13 @@
 package com.andriiginting.jetpackpro.utils
 
 import android.view.View
+import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.andriiginting.jetpackpro.BuildConfig
+import com.andriiginting.jetpackpro.data.network.DicodingClient
+import com.andriiginting.jetpackpro.data.network.DicodingService
+import com.bumptech.glide.Glide
 import io.reactivex.SingleTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -34,3 +38,12 @@ fun View.makeVisible() {
 fun View.makeGone() {
     visibility = View.GONE
 }
+
+fun ImageView.loadImage(url: String) {
+    Glide.with(context)
+        .load(BuildConfig.MOVIE_IMAGE_URL + url)
+        .centerCrop()
+        .into(this)
+}
+
+fun provideService(): DicodingService = DicodingClient.getRetrofitClient()?.create(DicodingService::class.java)!!

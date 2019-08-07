@@ -13,10 +13,9 @@ data class TvResponse(
 @Parcelize
 data class TvItem(
     @SerializedName("id") val id: String,
-    @SerializedName("movie_id") val movieId: String,
     @SerializedName("original_name") val title: String,
     @SerializedName("poster_path") val posterPath: String,
     @SerializedName("overview") val overview: String,
     @SerializedName("backdrop_path") val backdropPath: String,
-    @SerializedName("release_date") val releaseDate: String
+    @SerializedName("first_air_date") val releaseDate: String
 ) : Parcelable

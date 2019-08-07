@@ -8,6 +8,7 @@ import com.andriiginting.jetpackpro.base.BaseViewModel
 import com.andriiginting.jetpackpro.data.model.MovieResponse
 import com.andriiginting.jetpackpro.data.network.DicodingClient
 import com.andriiginting.jetpackpro.data.network.DicodingService
+import com.andriiginting.jetpackpro.data.repository.HomeRepositoryContract
 import com.andriiginting.jetpackpro.utils.plus
 import com.andriiginting.jetpackpro.utils.singleIo
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,21 +18,17 @@ interface MovieContract {
     fun getMovies()
 }
 
-class MovieViewModel : BaseViewModel(), MovieContract {
-
-    private val network by lazy {
-        DicodingClient
-            .getRetrofitClient()
-            ?.create(DicodingService::class.java)
-    }
+class MovieViewModel(
+    private val repositoryContract: HomeRepositoryContract
+) : BaseViewModel(), MovieContract {
 
     private val _state = MutableLiveData<MovieState>()
     val state: LiveData<MovieState>
         get() = _state
 
     override fun getMovies() {
-        addDisposable plus network?.getPopularMovies(BuildConfig.API_KEY)
-            ?.doOnSubscribe { _state.postValue(MovieState.ShowLoading) }
+        addDisposable plus repositoryContract.getPopularMovies()
+            .doOnSubscribe { _state.postValue(MovieState.ShowLoading) }
             ?.compose(singleIo())
             ?.subscribe({
                 _state.value = MovieState.HideLoading
