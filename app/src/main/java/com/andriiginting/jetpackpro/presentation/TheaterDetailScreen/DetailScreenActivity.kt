@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.andriiginting.jetpackpro.BuildConfig
 import com.andriiginting.jetpackpro.R
 import com.andriiginting.jetpackpro.base.BaseActivity
 import com.andriiginting.jetpackpro.base.BaseAdapter
@@ -15,10 +14,7 @@ import com.andriiginting.jetpackpro.data.model.MovieResponse
 import com.andriiginting.jetpackpro.data.repository.DetailScreenRepository
 import com.andriiginting.jetpackpro.presentation.movie.MovieViewHolder
 import com.andriiginting.jetpackpro.utils.*
-import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_detail_screen.*
-import kotlinx.android.synthetic.main.activity_detail_screen.layoutError
-import kotlinx.android.synthetic.main.fragment_movie.*
 
 class DetailScreenActivity : BaseActivity() {
     companion object {
@@ -90,10 +86,10 @@ class DetailScreenActivity : BaseActivity() {
         }
     }
 
-    private fun setupAdapter(){
-        movieAdapter = BaseAdapter({parent, _ ->
+    private fun setupAdapter() {
+        movieAdapter = BaseAdapter({ parent, _ ->
             MovieViewHolder.inflate(parent)
-        },{ viewHolder, _, item ->
+        }, { viewHolder, _, item ->
             viewHolder.setPoster(item.posterPath)
         })
     }
