@@ -91,7 +91,7 @@ class MovieFragment : Fragment() {
     }
 
     private fun loadData(items: MovieResponse) {
-        movieAdapter.addAll(items.resultsIntent)
+        movieAdapter.safeClearAndAddAll(items.resultsIntent)
         movieList = items.resultsIntent
     }
 

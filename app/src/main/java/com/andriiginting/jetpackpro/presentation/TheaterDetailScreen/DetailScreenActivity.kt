@@ -3,7 +3,6 @@ package com.andriiginting.jetpackpro.presentation.TheaterDetailScreen
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.andriiginting.jetpackpro.R
@@ -43,8 +42,6 @@ class DetailScreenActivity : BaseActivity() {
 
         screenType = intent.getStringExtra(SCREEN_TYPE).orEmpty()
         data = intent.getParcelableExtra(MOVIE_KEY)
-        Log.d("intent-data", data.toString())
-        Log.d("intent-data", screenType)
     }
 
     override fun getLayoutId(): Int = R.layout.activity_detail_screen
@@ -95,7 +92,7 @@ class DetailScreenActivity : BaseActivity() {
     }
 
     private fun loadData(items: MovieResponse) {
-        movieAdapter.addAll(items.resultsIntent)
+        movieAdapter.safeClearAndAddAll(items.resultsIntent)
         movieSimilar = items.resultsIntent
     }
 

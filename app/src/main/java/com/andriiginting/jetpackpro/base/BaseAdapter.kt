@@ -31,23 +31,6 @@ open class BaseAdapter<T, VH : RecyclerView.ViewHolder>(
         }
     }
 
-    override fun add(item: T) {
-        items.add(item)
-        notifyItemInserted(items.size)
-    }
-
-    /* define you item checked, for example items.size */
-    override fun add(item: T, index: Int) {
-        items.add(index, item)
-        notifyItemInserted(index)
-    }
-
-    /* define you item checked, for example items.size */
-    override fun addAll(collection: Collection<T>, index: Int) {
-        items.addAll(index, collection)
-        notifyItemRangeInserted(index, items.size)
-    }
-
     override fun addAll(collection: Collection<T>) {
         items.addAll(collection)
         notifyDataSetChanged()
@@ -60,87 +43,15 @@ open class BaseAdapter<T, VH : RecyclerView.ViewHolder>(
         }
     }
 
-    override fun clearAndAddAll(collection: Collection<T>) {
-        items.clear()
-        addAll(collection)
-    }
-
     override fun onViewDetachedFromWindow(holder: VH) {
         super.onViewDetachedFromWindow(holder)
         onDetachedFromWindow?.invoke(holder)
-    }
-
-    /* remove only single item */
-    override fun remove(item: T) {
-        val index = items.indexOfFirst { it == item }
-        if (index >= 0) {
-            items.removeAt(index)
-            notifyItemRemoved(index)
-        }
-    }
-
-    /* remove only single item with index */
-    override fun safeRemove(index: Int) {
-        if (index >= 0) {
-            items.removeAt(index)
-            notifyItemRemoved(index)
-        }
-    }
-
-    /* this use for example range of collection from n to t checked */
-    override fun removeRange(collection: Collection<T>) {
-        collection.forEachIndexed { index, item ->
-            items.remove(item)
-            notifyItemRemoved(index)
-        }
-    }
-
-    /* this use for example collection but in difference order */
-    override fun removeRange(vararg item: T) {
-        for (i in item) {
-            remove(i)
-        }
-    }
-
-    override fun update(item: T) {
-        val index = items.indexOfFirst { it == item }
-        notifyItemChanged(index)
-    }
-
-    override fun update(index: Int) {
-        update(items[index])
-    }
-
-    override fun updateAll(collection: Collection<T>) {
-        collection.forEachIndexed { position, item ->
-            items[position] = item
-        }
-        notifyDataSetChanged()
     }
 
     override fun safeClearAndAddAll(collection: Collection<T>) {
         collection.let {
             clear()
             addAll(collection)
-        }
-    }
-
-    override fun safeUpdateAll(collection: Collection<T>?) {
-        collection?.forEachIndexed { position, item ->
-            items[position] = item
-        }
-        notifyDataSetChanged()
-    }
-
-    override fun updateRange(collection: Collection<T>) {
-        collection.forEachIndexed { index, _ ->
-            update(items[index])
-        }
-    }
-
-    override fun updateRange(vararg item: T) {
-        for (i in item) {
-            update(i)
         }
     }
 
@@ -154,39 +65,12 @@ open class BaseAdapter<T, VH : RecyclerView.ViewHolder>(
 }
 
 interface AdapterObserver<T> {
-    fun add(item: T)
-
-    fun add(item: T, index: Int)
-
-    fun addAll(collection: Collection<T>, index: Int)
 
     fun addAll(collection: Collection<T>)
 
     fun safeAddAll(collection: Collection<T>?)
 
-    fun remove(item: T)
-
-    fun safeRemove(index: Int)
-
-    fun removeRange(collection: Collection<T>)
-
-    fun removeRange(vararg item: T)
-
-    fun clearAndAddAll(collection: Collection<T>)
-
-    fun update(item: T)
-
-    fun update(index: Int)
-
-    fun updateAll(collection: Collection<T>)
-
     fun safeClearAndAddAll(collection: Collection<T>)
-
-    fun safeUpdateAll(collection: Collection<T>?)
-
-    fun updateRange(collection: Collection<T>)
-
-    fun updateRange(vararg item: T)
 
     fun clear()
 }

@@ -72,7 +72,7 @@ class TvShowFragment : Fragment() {
     }
 
     private fun loadData(items: TvResponse) {
-        tvAdapter.addAll(items.resultsIntent)
+        tvAdapter.safeClearAndAddAll(items.resultsIntent)
         showList = items.resultsIntent
     }
 

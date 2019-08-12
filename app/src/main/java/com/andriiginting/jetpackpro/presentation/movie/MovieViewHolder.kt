@@ -22,7 +22,7 @@ class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val poster = view.ivPoster
 
-    fun setPoster(url: String) {
+    fun setPoster(url: String?) {
         Glide.with(itemView.context)
             .load("${BuildConfig.MOVIE_IMAGE_URL}$url")
             .into(poster)

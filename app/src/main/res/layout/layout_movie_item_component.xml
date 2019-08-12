@@ -3,7 +3,6 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ivPoster"
         android:layout_width="match_parent"
-        android:background="@color/dark_grey"
         android:contentDescription="@string/poster_description"
         android:layout_height="wrap_content">
 </ImageView>
