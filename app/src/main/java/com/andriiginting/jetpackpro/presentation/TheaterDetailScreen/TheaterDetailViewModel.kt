@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import com.andriiginting.jetpackpro.base.BaseViewModel
 import com.andriiginting.jetpackpro.data.model.MovieResponse
 import com.andriiginting.jetpackpro.data.repository.DetailScreenRepositoryContract
+import com.andriiginting.jetpackpro.utils.IdleResources.DECREMENT_IDLE_RESOURCES
+import com.andriiginting.jetpackpro.utils.IdleResources.idleResources
 import com.andriiginting.jetpackpro.utils.plus
 import com.andriiginting.jetpackpro.utils.singleIo
 
@@ -25,6 +27,7 @@ class TheaterDetailViewModel(
     override fun getSimilarMovie(id: String) {
         addDisposable plus repository.getSimilarMovie(id)
             .doOnSubscribe { _state.postValue(DetailScreenState.ShowLoading) }
+            ?.doAfterTerminate { idleResources = DECREMENT_IDLE_RESOURCES }
             ?.compose(singleIo())
             ?.subscribe({
                 _state.value = DetailScreenState.HideLoading
@@ -39,6 +42,7 @@ class TheaterDetailViewModel(
     override fun getSimilarTv(id: String) {
         addDisposable plus repository.getSimilarTvShow(id)
             .doOnSubscribe { _state.postValue(DetailScreenState.ShowLoading) }
+            ?.doAfterTerminate { idleResources = DECREMENT_IDLE_RESOURCES }
             ?.compose(singleIo())
             ?.subscribe({
                 _state.value = DetailScreenState.HideLoading

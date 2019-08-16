@@ -20,6 +20,7 @@ import com.andriiginting.jetpackpro.presentation.movie.MovieViewHolder
 import com.andriiginting.jetpackpro.presentation.tv.viewmodel.TvShowViewModel
 import com.andriiginting.jetpackpro.presentation.tv.viewmodel.TvShowViewModelFactory
 import com.andriiginting.jetpackpro.presentation.tv.viewmodel.TvState
+import com.andriiginting.jetpackpro.utils.IdleResources.DEFAULT_IDLE
 import com.andriiginting.jetpackpro.utils.makeGone
 import com.andriiginting.jetpackpro.utils.makeVisible
 import com.andriiginting.jetpackpro.utils.provideService

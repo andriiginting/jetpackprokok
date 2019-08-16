@@ -22,6 +22,7 @@ import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScree
 import com.andriiginting.jetpackpro.presentation.movie.viewmodel.MovieState
 import com.andriiginting.jetpackpro.presentation.movie.viewmodel.MovieViewModel
 import com.andriiginting.jetpackpro.presentation.movie.viewmodel.MovieViewModelFactory
+import com.andriiginting.jetpackpro.utils.IdleResources.DEFAULT_IDLE
 import com.andriiginting.jetpackpro.utils.makeGone
 import com.andriiginting.jetpackpro.utils.makeVisible
 import com.andriiginting.jetpackpro.utils.provideService

@@ -20,21 +20,18 @@ class DetailScreenTest {
 
     @Test
     fun testBackdropPosterIsAttach() {
-        Thread.sleep(3000)
         Espresso.onView(ViewMatchers.withId(R.id.ivPosterBackdrop))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
     fun testBackButtonIsAttach() {
-        Thread.sleep(3000)
         Espresso.onView(ViewMatchers.withId(R.id.ivBackNavigation))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
     fun testSimilarContent() {
-        Thread.sleep(3000)
         Espresso.onView(ViewMatchers.withId(R.id.rvSimilarMovie))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }

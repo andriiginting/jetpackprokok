@@ -13,6 +13,7 @@ import com.andriiginting.jetpackpro.data.model.MovieResponse
 import com.andriiginting.jetpackpro.data.repository.DetailScreenRepository
 import com.andriiginting.jetpackpro.presentation.movie.MovieViewHolder
 import com.andriiginting.jetpackpro.utils.*
+import com.andriiginting.jetpackpro.utils.IdleResources.DEFAULT_IDLE
 import kotlinx.android.synthetic.main.activity_detail_screen.*
 
 class DetailScreenActivity : BaseActivity() {
@@ -23,6 +24,7 @@ class DetailScreenActivity : BaseActivity() {
         const val TV_TYPE = "tv"
         private const val GRID_COLUMN = 3
 
+        var detailIdle = 1
         fun navigate(activity: Activity): Intent = Intent(activity, DetailScreenActivity::class.java)
     }
 

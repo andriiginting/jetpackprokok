@@ -6,6 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import com.andriiginting.jetpackpro.base.BaseViewModel
 import com.andriiginting.jetpackpro.data.model.TvResponse
 import com.andriiginting.jetpackpro.data.repository.HomeRepositoryContract
+import com.andriiginting.jetpackpro.presentation.tv.TvShowFragment
+import com.andriiginting.jetpackpro.utils.IdleResources
+import com.andriiginting.jetpackpro.utils.IdleResources.idleResources
 import com.andriiginting.jetpackpro.utils.plus
 import com.andriiginting.jetpackpro.utils.singleIo
 
@@ -24,6 +27,7 @@ class TvShowViewModel(
     override fun getTvShow() {
         addDisposable plus repositoryContract.getTvShowMovie()
             .doOnSubscribe { _state.postValue(TvState.ShowLoading) }
+            ?.doAfterTerminate { idleResources = IdleResources.DECREMENT_IDLE_RESOURCES }
             ?.compose(singleIo())
             ?.subscribe({
                 _state.value = TvState.HideLoading

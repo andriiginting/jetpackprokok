@@ -3,16 +3,13 @@ package com.andriiginting.jetpackpro.presentation.movie.viewmodel
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.andriiginting.jetpackpro.BuildConfig
 import com.andriiginting.jetpackpro.base.BaseViewModel
 import com.andriiginting.jetpackpro.data.model.MovieResponse
-import com.andriiginting.jetpackpro.data.network.DicodingClient
-import com.andriiginting.jetpackpro.data.network.DicodingService
 import com.andriiginting.jetpackpro.data.repository.HomeRepositoryContract
+import com.andriiginting.jetpackpro.utils.IdleResources.DECREMENT_IDLE_RESOURCES
+import com.andriiginting.jetpackpro.utils.IdleResources.idleResources
 import com.andriiginting.jetpackpro.utils.plus
 import com.andriiginting.jetpackpro.utils.singleIo
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 interface MovieContract {
     fun getMovies()
@@ -29,6 +26,7 @@ class MovieViewModel(
     override fun getMovies() {
         addDisposable plus repositoryContract.getPopularMovies()
             .doOnSubscribe { _state.postValue(MovieState.ShowLoading) }
+            ?.doAfterTerminate { idleResources = DECREMENT_IDLE_RESOURCES }
             ?.compose(singleIo())
             ?.subscribe({
                 _state.value = MovieState.HideLoading

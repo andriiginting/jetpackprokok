@@ -85,6 +85,8 @@ dependencies {
     // Dependencies for Android unit tests
     androidTestImplementation "junit:junit:$junitVersion"
     androidTestImplementation "org.mockito:mockito-android:2.8.9"
+    implementation 'androidx.test.espresso:espresso-idling-resource:3.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
 
 
     androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"

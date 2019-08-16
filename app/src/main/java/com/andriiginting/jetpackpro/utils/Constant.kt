@@ -7,6 +7,9 @@ object Network {
     const val SIMILAR_TV_POPULAR = "tv/{tv_id}/similar"
 }
 
-object Common {
-    const val DEFAULT_INT_VALUE = 0
+object IdleResources {
+    const val DEFAULT_IDLE = 1
+    const val DECREMENT_IDLE_RESOURCES = 0
+
+    var idleResources = DEFAULT_IDLE
 }
