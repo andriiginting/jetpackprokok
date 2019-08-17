@@ -19,18 +19,4 @@ abstract class BaseActivity : AppCompatActivity() {
     abstract fun getLayoutId(): Int
 
     abstract fun setupView()
-
-    protected fun setupToolbarWithTitle(toolbar: Toolbar, title: String) {
-        setupToolbar(toolbar).apply {
-            toolbar.title = title
-        }
-    }
-
-    private fun setupToolbar(toolbar: Toolbar): ActionBar? {
-        setSupportActionBar(toolbar)
-        val ab = supportActionBar
-        ab?.setDisplayHomeAsUpEnabled(true)
-        ab?.setDisplayShowHomeEnabled(true)
-        return ab
-    }
 }
