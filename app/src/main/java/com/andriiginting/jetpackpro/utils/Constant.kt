@@ -13,3 +13,9 @@ object IdleResources {
 
     var idleResources = DEFAULT_IDLE
 }
+
+object Room {
+    const val THEATER_TABLE_NAME = "favorite_theater"
+    const val GET_FAVORITE_THEATER = "SELECT * FROM $THEATER_TABLE_NAME"
+    const val FAVORITE_DATABASE_NAME = "favorite.db"
+}
