@@ -16,6 +16,8 @@ object IdleResources {
 
 object Room {
     const val THEATER_TABLE_NAME = "favorite_theater"
-    const val GET_FAVORITE_THEATER = "SELECT * FROM $THEATER_TABLE_NAME"
+    const val GET_ALL_FAVORITE_THEATER = "SELECT * FROM favorite_theater"
+    const val FILTER_FAVORITE_THEATER_WITH_ID = "SELECT * FROM favorite_theater WHERE movie_id =:id LIMIT 1"
+    const val DELETE_FAVORITE_THEATER_WITH_ID = "DELETE FROM favorite_theater WHERE movie_id = :movieId "
     const val FAVORITE_DATABASE_NAME = "favorite.db"
 }

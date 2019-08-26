@@ -1,6 +1,7 @@
 package com.andriiginting.jetpackpro.presentation
 
 import androidx.lifecycle.Observer
+import com.andriiginting.jetpackpro.data.database.TheaterFavorite
 import com.andriiginting.jetpackpro.data.model.MovieItem
 import com.andriiginting.jetpackpro.data.model.MovieResponse
 import com.andriiginting.jetpackpro.data.repository.DetailScreenRepositoryContract
@@ -12,6 +13,7 @@ import com.nhaarman.mockito_kotlin.atLeastOnce
 import com.nhaarman.mockito_kotlin.clearInvocations
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
+import io.reactivex.Completable
 import io.reactivex.Single
 import org.junit.After
 import org.junit.Before
@@ -134,6 +136,71 @@ class DetailScreenViewModelTest {
         Mockito.verify(observer, atLeastOnce()).onChanged(DetailScreenState.ShowLoading)
         Mockito.verify(observer, atLeastOnce()).onChanged(DetailScreenState.HideLoading)
         Mockito.verify(observer, atLeastOnce()).onChanged(DetailScreenState.LoadScreenError)
+
+        verifyNoMoreInteractions(observer, repo)
+        clearInvocations(observer, repo)
+    }
+
+    @Test
+    fun `given detail viewmodel when check favorite theater should return true`() {
+        val theater = TheaterFavorite(
+            theaterFavoriteId = "id",
+            posterPath = "/vC324sdfcS313vh9QXwijLIHPJp.jpg",
+            theaterTitle = "Pretty Little Liars",
+            overview = "Based on the Pretty Little Liars series of young adult novels by Sara Shepard, the series follows the lives of four girls — Spencer, Hanna, Aria, and Emily — whose clique falls apart after the disappearance of their queen bee, Alison. One year later, they begin receiving messages from someone using the name \"A\" who threatens to expose their secrets — including long-hidden ones they thought only Alison knew.",
+            backdropPath = "/rQGBjWNveVeF8f2PGRtS85w9o9r.jpg",
+            releaseDate = "2012-10-10"
+        )
+
+        Mockito.`when`(repo.isFavoriteTheater(id))
+            .thenReturn(Single.just(theater))
+
+        viewModel.isFavoriteTheater(id)
+
+        Mockito.verify(repo, atLeastOnce()).isFavoriteTheater(id)
+        Mockito.verify(observer, atLeastOnce()).onChanged(DetailScreenState.IsFavoriteTheater(true))
+
+        verifyNoMoreInteractions(observer, repo)
+        clearInvocations(observer, repo)
+    }
+
+    @Test
+    fun `given detail viewmodel when check favorite theater should return false`() {
+        Mockito.`when`(repo.isFavoriteTheater(id))
+            .thenReturn(Single.error(Throwable("error")))
+
+        viewModel.isFavoriteTheater(id)
+
+        Mockito.verify(repo, atLeastOnce()).isFavoriteTheater(id)
+        Mockito.verify(observer, atLeastOnce()).onChanged(DetailScreenState.IsFavoriteTheater(false))
+
+        verifyNoMoreInteractions(observer, repo)
+        clearInvocations(observer, repo)
+    }
+
+    @Test
+    fun `given detail viewmodel when delete favorite theater should return success`() {
+        Mockito.`when`(repo.deleteTheaterData(id))
+            .thenReturn(Completable.complete())
+
+        viewModel.deleteTheaterData(id)
+
+        Mockito.verify(repo, atLeastOnce()).deleteTheaterData(id)
+        Mockito.verify(observer, atLeastOnce()).onChanged(DetailScreenState.SuccessDeleteTheater)
+
+        verifyNoMoreInteractions(observer, repo)
+        clearInvocations(observer, repo)
+    }
+
+    @Test
+    fun `given detail viewmodel when delete favorite theater should return failed`() {
+        Mockito.`when`(repo.deleteTheaterData(id))
+            .thenReturn(Completable.error(Throwable("error")))
+
+        viewModel.deleteTheaterData(id)
+
+        Mockito.verify(repo, atLeastOnce()).deleteTheaterData(id)
+        Mockito.verify(observer, atLeastOnce()).onChanged(DetailScreenState.FailedDeleteTheater)
 
         verifyNoMoreInteractions(observer, repo)
         clearInvocations(observer, repo)

@@ -12,21 +12,16 @@ import com.andriiginting.jetpackpro.base.BaseAdapter
 import com.andriiginting.jetpackpro.data.model.MovieItem
 import com.andriiginting.jetpackpro.data.model.TvItem
 import com.andriiginting.jetpackpro.data.model.TvResponse
-import com.andriiginting.jetpackpro.data.network.DicodingClient
-import com.andriiginting.jetpackpro.data.network.DicodingService
-import com.andriiginting.jetpackpro.data.repository.HomeRepository
 import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScreenActivity
+import com.andriiginting.jetpackpro.presentation.module.InjectionModule
 import com.andriiginting.jetpackpro.presentation.movie.MovieViewHolder
 import com.andriiginting.jetpackpro.presentation.tv.viewmodel.TvShowViewModel
 import com.andriiginting.jetpackpro.presentation.tv.viewmodel.TvShowViewModelFactory
 import com.andriiginting.jetpackpro.presentation.tv.viewmodel.TvState
-import com.andriiginting.jetpackpro.utils.IdleResources.DEFAULT_IDLE
 import com.andriiginting.jetpackpro.utils.makeGone
 import com.andriiginting.jetpackpro.utils.makeVisible
-import com.andriiginting.jetpackpro.utils.provideService
 import com.andriiginting.jetpackpro.utils.setGridView
 import kotlinx.android.synthetic.main.fragment_tv_show.*
-import kotlinx.android.synthetic.main.fragment_tv_show.layoutError
 
 class TvShowFragment : Fragment() {
     companion object {
@@ -42,7 +37,7 @@ class TvShowFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders
-            .of(this, TvShowViewModelFactory(HomeRepository(provideService())))
+            .of(this, TvShowViewModelFactory(InjectionModule.provideHomeRepository()))
             .get(TvShowViewModel::class.java)
         initData()
         initObserver()

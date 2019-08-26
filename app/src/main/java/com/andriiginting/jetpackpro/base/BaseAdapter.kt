@@ -1,6 +1,9 @@
 package com.andriiginting.jetpackpro.base
 
 import android.view.ViewGroup
+import androidx.paging.PagedList
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 open class BaseAdapter<T, VH : RecyclerView.ViewHolder>(

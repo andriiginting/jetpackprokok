@@ -7,4 +7,7 @@
     <dimen name="_18ssp">18sp</dimen>
     <dimen name="_0sdp">0dp</dimen>
     <dimen name="_120sdp">120dp</dimen>
+    <dimen name="_24sdp">24dp</dimen>
+    <dimen name="_100sdp">100dp</dimen>
+    <dimen name="_4sdp">4dp</dimen>
 </resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".presentation.favorite.FavoriteTheaterFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFavoriteFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    <ProgressBar
+            android:id="@+id/pbMainFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+
+    <include
+            android:id="@+id/layoutError"
+            layout="@layout/layout_error"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="gone"/>
+
+    <include
+            android:id="@+id/layoutEmpty"
+            layout="@layout/layout_empty_theater"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="gone"/>
+
+</FrameLayout>

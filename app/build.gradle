@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -48,11 +49,14 @@ dependencies {
 
     // Dependencies for Architecture Component
     implementation "androidx.room:room-runtime:$roomVersion"
-    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-rxjava2:2.1.0-alpha06"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$archLifecycleVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$archLifecycleVersion"
     // Dependencies for Paging
     implementation "androidx.paging:paging-runtime:$pagingVersion"
+    implementation "android.arch.paging:rxjava2:$archPagingVersion"
 
     //rx
     implementation "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
@@ -60,6 +64,11 @@ dependencies {
 
     //gson
     implementation 'com.google.code.gson:gson:2.8.5'
+
+    //dagger
+    implementation 'com.google.dagger:dagger-android:2.24'
+    implementation 'com.google.dagger:dagger-android-support:2.24'
+    kapt 'com.google.dagger:dagger-android-processor:2.24'
 
     //networking
     implementation "com.squareup.okhttp3:okhttp:${okhttp}"

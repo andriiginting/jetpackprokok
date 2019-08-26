@@ -3,8 +3,19 @@
 
     <string name="text_title_movie">Movie</string>
     <string name="text_title_tvshow">Tv Shows</string>
+    <string name="text_title_favorite">Favorites</string>
     <string name="poster_description">Poster</string>
     <string name="image_backdrop_detail">image backdrop</string>
     <string name="more_like_this">More Like This</string>
     <string name="error_string">Sorry, We\'re trying to fix it</string>
+    <string name="text_favorite_icon">image favorite icon</string>
+    <string name="text_success_save_data">Success Save Data</string>
+    <string name="text_success_delete_data">Success Delete Data</string>
+    <string name="text_failed_save_data">Failed to Save Data</string>
+    <string name="text_failed_delete_data">Failed to Delete Data</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_screen_type">Screen Type</string>
+    <string name="text_no_favorite">Found Something?</string>
 </resources>

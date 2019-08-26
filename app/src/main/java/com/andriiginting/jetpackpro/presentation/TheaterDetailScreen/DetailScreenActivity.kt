@@ -3,6 +3,7 @@ package com.andriiginting.jetpackpro.presentation.TheaterDetailScreen
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.andriiginting.jetpackpro.R
@@ -10,18 +11,17 @@ import com.andriiginting.jetpackpro.base.BaseActivity
 import com.andriiginting.jetpackpro.base.BaseAdapter
 import com.andriiginting.jetpackpro.data.model.MovieItem
 import com.andriiginting.jetpackpro.data.model.MovieResponse
-import com.andriiginting.jetpackpro.data.repository.DetailScreenRepository
+import com.andriiginting.jetpackpro.presentation.module.InjectionModule
 import com.andriiginting.jetpackpro.presentation.movie.MovieViewHolder
 import com.andriiginting.jetpackpro.utils.*
-import com.andriiginting.jetpackpro.utils.IdleResources.DEFAULT_IDLE
 import kotlinx.android.synthetic.main.activity_detail_screen.*
 
 class DetailScreenActivity : BaseActivity() {
     companion object {
         const val SCREEN_TYPE = "screenType"
         const val MOVIE_KEY = "movieKey"
-        const val MOVIE_TYPE = "movie"
-        const val TV_TYPE = "tv"
+        const val MOVIE_TYPE = "Movie"
+        const val TV_TYPE = "Tv Show"
         private const val GRID_COLUMN = 3
 
         var detailIdle = 1
@@ -33,12 +33,13 @@ class DetailScreenActivity : BaseActivity() {
 
     private lateinit var vm: TheaterDetailViewModel
     private lateinit var screenType: String
+    private var isFavoriteTheater = false
     private var data: MovieItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         vm = ViewModelProviders
-            .of(this, TheaterDetailViewModelFactory(DetailScreenRepository(provideService())))
+            .of(this, TheaterDetailViewModelFactory(InjectionModule.provideTheaterDatabase(applicationContext)))
             .get(TheaterDetailViewModel::class.java)
         initObserver()
 
@@ -59,6 +60,7 @@ class DetailScreenActivity : BaseActivity() {
 
     private fun initData() {
         setupAdapter()
+        vm.isFavoriteTheater(data?.id.orEmpty())
         when (screenType) {
             MOVIE_TYPE -> vm.getSimilarMovie(data?.id.orEmpty())
             TV_TYPE -> vm.getSimilarTv(data?.id.orEmpty())
@@ -76,6 +78,18 @@ class DetailScreenActivity : BaseActivity() {
             finish()
         }
         ivPosterBackdrop.loadImage(data?.backdropPath.orEmpty())
+        ivTheaterFavorite.setOnClickListener { clickAction(isFavoriteTheater) }
+
+    }
+
+    private fun clickAction(isFavorite: Boolean) {
+        if (isFavorite) {
+            data?.let {
+                vm.deleteTheaterData(it.movieId)
+            }
+        } else {
+            data?.let { vm.saveFavoriteTheater(it, screenType) }
+        }
     }
 
     private fun setupSimilarScreen() {
@@ -91,6 +105,21 @@ class DetailScreenActivity : BaseActivity() {
         }, { viewHolder, _, item ->
             viewHolder.setPoster(item.posterPath)
         })
+    }
+
+    private fun setupFavoriteButton(isFavorite: Boolean) {
+        when {
+            isFavorite -> {
+                ivTheaterFavorite.apply {
+                    setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_favorite_active, null))
+                }
+            }
+            else -> {
+                ivTheaterFavorite.apply {
+                    setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_favorite_inactive, null))
+                }
+            }
+        }
     }
 
     private fun loadData(items: MovieResponse) {
@@ -122,6 +151,30 @@ class DetailScreenActivity : BaseActivity() {
                 is DetailScreenState.LoadSimilarTVSuccess -> {
                     loadData(state.data)
                     hideErrorScreen()
+                }
+
+                is DetailScreenState.SuccessToSaveData -> {
+                    isFavoriteTheater = true
+                    setupFavoriteButton(isFavoriteTheater)
+                    showSnackBar(detailContainer, getString(R.string.text_success_save_data))
+                }
+                is DetailScreenState.FailedToSaveData -> {
+                    showSnackBar(detailContainer, getString(R.string.text_failed_save_data))
+                }
+
+                is DetailScreenState.IsFavoriteTheater -> {
+                    isFavoriteTheater = state.status
+                    setupFavoriteButton(state.status)
+                }
+
+                is DetailScreenState.SuccessDeleteTheater -> {
+                    isFavoriteTheater = false
+                    setupFavoriteButton(isFavoriteTheater)
+                    showSnackBar(detailContainer, getString(R.string.text_success_delete_data))
+                }
+
+                is DetailScreenState.FailedDeleteTheater -> {
+                    showSnackBar(detailContainer, getString(R.string.text_success_delete_data))
                 }
             }
         })

@@ -1,13 +1,13 @@
 package com.andriiginting.jetpackpro.data.repository
 
+import com.andriiginting.jetpackpro.data.database.TheaterDAO
+import com.andriiginting.jetpackpro.data.database.TheaterFavorite
 import com.andriiginting.jetpackpro.data.model.MovieItem
 import com.andriiginting.jetpackpro.data.model.MovieResponse
 import com.andriiginting.jetpackpro.data.network.DicodingService
 import com.andriiginting.jetpackpro.helper.TrampolineSchedulerRX
 import com.andriiginting.jetpackpro.helper.load
-import com.nhaarman.mockito_kotlin.atLeastOnce
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.*
 import io.reactivex.Single
 import org.junit.After
 import org.junit.Before
@@ -17,9 +17,10 @@ import org.mockito.MockitoAnnotations
 
 class DetailScreenRepositoryTest {
     private val service = mock<DicodingService>()
+    private val db = mock<TheaterDAO>()
     private val key = "key"
     private val id = "id"
-    private var repository = DetailScreenRepository(service)
+    private var repository = DetailScreenRepository(service, db)
     private var error = Throwable("error msg")
 
     private var response = MovieResponse(
@@ -115,6 +116,34 @@ class DetailScreenRepositoryTest {
         }
 
         verify(service, atLeastOnce()).getSimilarTvShow(id, key)
+    }
+
+    @Test
+    fun `given detail repository when get check isFavorite theater should return true`() {
+        val favorite = TheaterFavorite(
+            theaterFavoriteId = "31917",
+            posterPath = "/vC324sdfcS313vh9QXwijLIHPJp.jpg",
+            theaterTitle = "Pretty Little Liars",
+            overview = "Based on the Pretty Little Liars series of young adult novels by Sara Shepard, the series follows the lives of four girls — Spencer, Hanna, Aria, and Emily — whose clique falls apart after the disappearance of their queen bee, Alison. One year later, they begin receiving messages from someone using the name \"A\" who threatens to expose their secrets — including long-hidden ones they thought only Alison knew.",
+            backdropPath = "/rQGBjWNveVeF8f2PGRtS85w9o9r.jpg",
+            releaseDate = "2012-10-10"
+        )
+        val ids = 31917
+
+        Mockito.`when`(db.isFavorite(ids))
+            .thenReturn(Single.just(favorite))
+
+        val test = db.isFavorite(ids).test()
+        repository.isFavoriteTheater("$ids")
+
+        test.apply {
+            assertNoErrors()
+            assertComplete()
+            assertTerminated()
+            assert(true)
+        }
+
+        verify(db, atLeastOnce()).isFavorite(ids)
     }
 
     @After

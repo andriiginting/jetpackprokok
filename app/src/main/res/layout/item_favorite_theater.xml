@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <ImageView
+            android:id="@+id/ivFavoriteTheater"
+            android:layout_width="@dimen/_0sdp"
+            android:layout_height="@dimen/_200sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_movie_placeholder"/>
+
+    <TextView
+            android:id="@+id/tvScreenType"
+            android:background="@drawable/bg_rounded_blue"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="wrap_content"
+            tools:text="@string/text_screen_type"
+            android:textColor="@color/white"
+            android:padding="@dimen/_4sdp"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
