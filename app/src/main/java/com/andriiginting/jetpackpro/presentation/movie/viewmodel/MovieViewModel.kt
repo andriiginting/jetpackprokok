@@ -3,7 +3,7 @@ package com.andriiginting.jetpackpro.presentation.movie.viewmodel
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.andriiginting.jetpackpro.base.BaseViewModel
+import com.andriiginting.jetpackpro.TheaterBaseViewModel
 import com.andriiginting.jetpackpro.data.model.MovieResponse
 import com.andriiginting.jetpackpro.data.repository.HomeRepositoryContract
 import com.andriiginting.jetpackpro.utils.IdleResources.DECREMENT_IDLE_RESOURCES
@@ -17,7 +17,7 @@ interface MovieContract {
 
 class MovieViewModel(
     private val repositoryContract: HomeRepositoryContract
-) : BaseViewModel(), MovieContract {
+) : TheaterBaseViewModel(), MovieContract {
 
     private val _state = MutableLiveData<MovieState>()
     val state: LiveData<MovieState>

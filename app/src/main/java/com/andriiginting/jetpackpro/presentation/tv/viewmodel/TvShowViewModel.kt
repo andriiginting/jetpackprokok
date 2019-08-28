@@ -3,10 +3,9 @@ package com.andriiginting.jetpackpro.presentation.tv.viewmodel
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.andriiginting.jetpackpro.base.BaseViewModel
+import com.andriiginting.jetpackpro.TheaterBaseViewModel
 import com.andriiginting.jetpackpro.data.model.TvResponse
 import com.andriiginting.jetpackpro.data.repository.HomeRepositoryContract
-import com.andriiginting.jetpackpro.presentation.tv.TvShowFragment
 import com.andriiginting.jetpackpro.utils.IdleResources
 import com.andriiginting.jetpackpro.utils.IdleResources.idleResources
 import com.andriiginting.jetpackpro.utils.plus
@@ -18,7 +17,7 @@ interface TvShowContract {
 
 class TvShowViewModel(
     private val repositoryContract: HomeRepositoryContract
-) : BaseViewModel(), TvShowContract {
+) : TheaterBaseViewModel(), TvShowContract {
 
     private val _state = MutableLiveData<TvState>()
     val state: LiveData<TvState>

@@ -1,16 +1,14 @@
-package com.andriiginting.jetpackpro.base
+package com.andriiginting.jetpackpro
 
 import android.view.ViewGroup
-import androidx.paging.PagedList
-import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-open class BaseAdapter<T, VH : RecyclerView.ViewHolder>(
+open class TheaterBaseAdapter<T, VH : RecyclerView.ViewHolder>(
     private val onCreateViewHolder: (parent: ViewGroup, viewType: Int) -> VH,
     private val onBindViewHolder: (viewHolder: VH, position: Int, item: T) -> Unit,
     private val onViewType: ((viewType: Int, item: List<T>) -> Int)? = null,
-    private val onDetachedFromWindow: ((VH) -> Unit)? = null) : RecyclerView.Adapter<VH>(), AdapterObserver<T> {
+    private val onDetachedFromWindow: ((VH) -> Unit)? = null
+) : RecyclerView.Adapter<VH>(), AdapterObserver<T> {
 
     var items = mutableListOf<T>()
     private var onGetItemViewType: ((position: Int) -> Int)? = null

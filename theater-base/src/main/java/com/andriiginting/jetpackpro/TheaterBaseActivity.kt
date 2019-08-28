@@ -1,11 +1,9 @@
-package com.andriiginting.jetpackpro.base
+package com.andriiginting.jetpackpro
 
 import android.os.Bundle
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class TheaterBaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())

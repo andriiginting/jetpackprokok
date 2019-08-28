@@ -7,8 +7,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.andriiginting.jetpackpro.R
-import com.andriiginting.jetpackpro.base.BaseActivity
-import com.andriiginting.jetpackpro.base.BaseAdapter
+import com.andriiginting.jetpackpro.TheaterBaseActivity
+import com.andriiginting.jetpackpro.TheaterBaseAdapter
 import com.andriiginting.jetpackpro.data.model.MovieItem
 import com.andriiginting.jetpackpro.data.model.MovieResponse
 import com.andriiginting.jetpackpro.presentation.module.InjectionModule
@@ -16,7 +16,7 @@ import com.andriiginting.jetpackpro.presentation.movie.MovieViewHolder
 import com.andriiginting.jetpackpro.utils.*
 import kotlinx.android.synthetic.main.activity_detail_screen.*
 
-class DetailScreenActivity : BaseActivity() {
+class DetailScreenActivity : TheaterBaseActivity() {
     companion object {
         const val SCREEN_TYPE = "screenType"
         const val MOVIE_KEY = "movieKey"
@@ -25,10 +25,11 @@ class DetailScreenActivity : BaseActivity() {
         private const val GRID_COLUMN = 3
 
         var detailIdle = 1
-        fun navigate(activity: Activity): Intent = Intent(activity, DetailScreenActivity::class.java)
+        fun navigate(activity: Activity): Intent =
+            Intent(activity, DetailScreenActivity::class.java)
     }
 
-    private lateinit var movieAdapter: BaseAdapter<MovieItem, MovieViewHolder>
+    private lateinit var movieAdapter: TheaterBaseAdapter<MovieItem, MovieViewHolder>
     private var movieSimilar: List<MovieItem>? = listOf()
 
     private lateinit var vm: TheaterDetailViewModel
@@ -39,7 +40,12 @@ class DetailScreenActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         vm = ViewModelProviders
-            .of(this, TheaterDetailViewModelFactory(InjectionModule.provideTheaterDatabase(applicationContext)))
+            .of(
+                this,
+                TheaterDetailViewModelFactory(
+                    InjectionModule.provideTheaterDatabase(applicationContext)
+                )
+            )
             .get(TheaterDetailViewModel::class.java)
         initObserver()
 
@@ -100,7 +106,7 @@ class DetailScreenActivity : BaseActivity() {
     }
 
     private fun setupAdapter() {
-        movieAdapter = BaseAdapter({ parent, _ ->
+        movieAdapter = TheaterBaseAdapter({ parent, _ ->
             MovieViewHolder.inflate(parent)
         }, { viewHolder, _, item ->
             viewHolder.setPoster(item.posterPath)
@@ -111,12 +117,24 @@ class DetailScreenActivity : BaseActivity() {
         when {
             isFavorite -> {
                 ivTheaterFavorite.apply {
-                    setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_favorite_active, null))
+                    setImageDrawable(
+                        ResourcesCompat.getDrawable(
+                            resources,
+                            R.drawable.ic_favorite_active,
+                            null
+                        )
+                    )
                 }
             }
             else -> {
                 ivTheaterFavorite.apply {
-                    setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_favorite_inactive, null))
+                    setImageDrawable(
+                        ResourcesCompat.getDrawable(
+                            resources,
+                            R.drawable.ic_favorite_inactive,
+                            null
+                        )
+                    )
                 }
             }
         }

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.andriiginting.jetpackpro.R
-import com.andriiginting.jetpackpro.base.BaseAdapter
+import com.andriiginting.jetpackpro.TheaterBaseAdapter
 import com.andriiginting.jetpackpro.data.model.MovieItem
 import com.andriiginting.jetpackpro.data.model.TvItem
 import com.andriiginting.jetpackpro.data.model.TvResponse
@@ -29,7 +29,7 @@ class TvShowFragment : Fragment() {
         fun newInstance(): TvShowFragment = TvShowFragment()
     }
 
-    private lateinit var tvAdapter: BaseAdapter<TvItem, MovieViewHolder>
+    private lateinit var tvAdapter: TheaterBaseAdapter<TvItem, MovieViewHolder>
     private var showList: List<TvItem>? = listOf()
 
     private lateinit var viewModel: TvShowViewModel
@@ -73,7 +73,7 @@ class TvShowFragment : Fragment() {
     }
 
     private fun setupAdapter() {
-        tvAdapter = BaseAdapter({ parent, _ ->
+        tvAdapter = TheaterBaseAdapter({ parent, _ ->
             MovieViewHolder.inflate(parent).also {
                 it.setPosterAction(::navigateTo)
             }

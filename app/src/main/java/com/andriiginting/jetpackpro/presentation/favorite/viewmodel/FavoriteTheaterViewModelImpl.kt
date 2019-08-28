@@ -3,7 +3,7 @@ package com.andriiginting.jetpackpro.presentation.favorite.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
-import com.andriiginting.jetpackpro.base.BaseViewModel
+import com.andriiginting.jetpackpro.TheaterBaseViewModel
 import com.andriiginting.jetpackpro.data.database.TheaterFavorite
 import com.andriiginting.jetpackpro.domain.TheaterUseCaseMapper
 import com.andriiginting.jetpackpro.utils.IdleResources
@@ -17,7 +17,7 @@ interface FavoriteTheaterViewModel {
 
 class FavoriteTheaterViewModelImpl(
     private val useCase: TheaterUseCaseMapper
-) : FavoriteTheaterViewModel, BaseViewModel() {
+) : FavoriteTheaterViewModel, TheaterBaseViewModel() {
 
     private val _state = MutableLiveData<FavoriteTheaterState>()
     val state: LiveData<FavoriteTheaterState>

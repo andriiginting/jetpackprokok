@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.andriiginting.jetpackpro.R
-import com.andriiginting.jetpackpro.base.BaseAdapter
+import com.andriiginting.jetpackpro.TheaterBaseAdapter
 import com.andriiginting.jetpackpro.data.model.MovieItem
 import com.andriiginting.jetpackpro.data.model.MovieResponse
 import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScreenActivity.Companion.MOVIE_KEY
@@ -31,7 +31,7 @@ class MovieFragment : Fragment() {
         fun newInstance(): MovieFragment = MovieFragment()
     }
 
-    private lateinit var movieAdapter: BaseAdapter<MovieItem, MovieViewHolder>
+    private lateinit var movieAdapter: TheaterBaseAdapter<MovieItem, MovieViewHolder>
     private var movieList: List<MovieItem>? = listOf()
 
     private lateinit var viewModel: MovieViewModel
@@ -109,7 +109,7 @@ class MovieFragment : Fragment() {
     }
 
     private fun setupAdapter() {
-        movieAdapter = BaseAdapter({ parent, _ ->
+        movieAdapter = TheaterBaseAdapter({ parent, _ ->
             MovieViewHolder.inflate(parent).also {
                 it.setPosterAction(::navigateTo)
             }

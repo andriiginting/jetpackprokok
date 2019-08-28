@@ -3,7 +3,7 @@ package com.andriiginting.jetpackpro.presentation.TheaterDetailScreen
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.andriiginting.jetpackpro.base.BaseViewModel
+import com.andriiginting.jetpackpro.TheaterBaseViewModel
 import com.andriiginting.jetpackpro.data.model.MovieItem
 import com.andriiginting.jetpackpro.data.model.MovieResponse
 import com.andriiginting.jetpackpro.data.repository.DetailScreenRepositoryContract
@@ -23,7 +23,7 @@ interface TheaterDetailContract {
 
 class TheaterDetailViewModel(
     private val repository: DetailScreenRepositoryContract
-) : BaseViewModel(), TheaterDetailContract {
+) : TheaterBaseViewModel(), TheaterDetailContract {
 
     private val _state = MutableLiveData<DetailScreenState>()
     val state: LiveData<DetailScreenState>
