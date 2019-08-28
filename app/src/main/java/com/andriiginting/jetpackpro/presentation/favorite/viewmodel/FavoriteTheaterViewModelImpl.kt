@@ -2,11 +2,14 @@ package com.andriiginting.jetpackpro.presentation.favorite.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import androidx.paging.RxPagedListBuilder
 import com.andriiginting.jetpackpro.base.BaseViewModel
 import com.andriiginting.jetpackpro.data.database.TheaterFavorite
 import com.andriiginting.jetpackpro.data.repository.FavoriteRepository
+import com.andriiginting.jetpackpro.domain.TheaterUseCaseMapper
+import com.andriiginting.jetpackpro.utils.IdleResources
 import com.andriiginting.jetpackpro.utils.plus
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -18,19 +21,15 @@ interface FavoriteTheaterViewModel {
 }
 
 class FavoriteTheaterViewModelImpl(
-    repository: FavoriteRepository
+    private val useCase: TheaterUseCaseMapper
 ) : FavoriteTheaterViewModel, BaseViewModel() {
 
     private val _state = MutableLiveData<FavoriteTheaterState>()
     val state: LiveData<FavoriteTheaterState>
         get() = _state
 
-    private val favoriteList: Flowable<PagedList<TheaterFavorite>> =
-        RxPagedListBuilder(repository.getFavoriteTheater(), PAGE_SIZE)
-            .buildFlowable(BackpressureStrategy.BUFFER)
-
     override fun getFavoriteTheater() {
-        addDisposable plus favoriteList
+        addDisposable plus useCase.getAllTheaterFavorite()
             .doOnSubscribe { _state.value = FavoriteTheaterState.ShowLoading }
             .doAfterTerminate { _state.value = FavoriteTheaterState.HideLoading }
             .subscribe({

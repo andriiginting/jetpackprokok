@@ -76,6 +76,37 @@ class MainScreenTest {
             )
     }
 
+    @Test
+    fun testSwipeLeftTwice() {
+        onView(withId(R.id.mainPager)).check(matches(isDisplayed()))
+        onView(withId(R.id.mainPager)).perform(swipeLeft())
+        onView(withId(R.id.mainPager)).perform(swipeLeft())
+    }
+
+    @Test
+    fun testFavoriteItemShown(){
+        onView(withId(R.id.mainPager)).check(matches(isDisplayed()))
+        onView(withId(R.id.mainPager)).perform(swipeLeft())
+        onView(withId(R.id.mainPager)).perform(swipeLeft())
+
+        onView(withId(R.id.rvFavoriteFragment)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun testClickOneOfFavoriteItem(){
+        onView(withId(R.id.mainPager)).check(matches(isDisplayed()))
+        onView(withId(R.id.mainPager)).perform(swipeLeft())
+        onView(withId(R.id.mainPager)).perform(swipeLeft())
+
+        onView(withId(R.id.rvFavoriteFragment)).check(matches(isDisplayed()))
+        onView(withId(R.id.rvFavoriteFragment))
+            .perform(
+                RecyclerViewActions
+                    .actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click())
+            )
+    }
+
+
     @After
     fun tear() {
         IdlingRegistry.getInstance().unregister(idle)

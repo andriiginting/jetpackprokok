@@ -16,6 +16,7 @@ import com.andriiginting.jetpackpro.base.TheaterPagingAdapter
 import com.andriiginting.jetpackpro.data.database.TheaterDatabase
 import com.andriiginting.jetpackpro.data.database.TheaterFavorite
 import com.andriiginting.jetpackpro.data.repository.FavoriteRepositoryImpl
+import com.andriiginting.jetpackpro.domain.TheaterUseCase
 import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScreenActivity
 import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScreenActivity.Companion.MOVIE_KEY
 import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScreenActivity.Companion.MOVIE_TYPE
@@ -23,6 +24,7 @@ import com.andriiginting.jetpackpro.presentation.TheaterDetailScreen.DetailScree
 import com.andriiginting.jetpackpro.presentation.favorite.viewmodel.FavoriteTheaterState
 import com.andriiginting.jetpackpro.presentation.favorite.viewmodel.FavoriteTheaterViewModelImpl
 import com.andriiginting.jetpackpro.presentation.favorite.viewmodel.FavoriteViewModelFactory
+import com.andriiginting.jetpackpro.presentation.module.InjectionModule
 import com.andriiginting.jetpackpro.utils.makeGone
 import com.andriiginting.jetpackpro.utils.makeVisible
 import com.andriiginting.jetpackpro.utils.mapToMovie
@@ -42,8 +44,8 @@ class FavoriteTheaterFragment : Fragment() {
 
     private var favoriteList: ArrayList<TheaterFavorite>? = arrayListOf()
 
-    private val repo by lazy {
-        FavoriteRepositoryImpl(context?.let { TheaterDatabase.getInstance(it)?.theaterDAO() }!!)
+    private val usecase by lazy {
+        InjectionModule.provideFavoriteUseCase(requireContext())
     }
 
     override fun onCreateView(
@@ -56,7 +58,7 @@ class FavoriteTheaterFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders
-            .of(this, FavoriteViewModelFactory(repo))
+            .of(this, FavoriteViewModelFactory(usecase))
             .get(FavoriteTheaterViewModelImpl::class.java)
 
         initData()
