@@ -2,17 +2,12 @@ package com.andriiginting.jetpackpro.presentation.favorite.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import androidx.paging.RxPagedListBuilder
 import com.andriiginting.jetpackpro.base.BaseViewModel
 import com.andriiginting.jetpackpro.data.database.TheaterFavorite
-import com.andriiginting.jetpackpro.data.repository.FavoriteRepository
 import com.andriiginting.jetpackpro.domain.TheaterUseCaseMapper
 import com.andriiginting.jetpackpro.utils.IdleResources
 import com.andriiginting.jetpackpro.utils.plus
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
 
 const val PAGE_SIZE = 10
 
@@ -31,11 +26,17 @@ class FavoriteTheaterViewModelImpl(
     override fun getFavoriteTheater() {
         addDisposable plus useCase.getAllTheaterFavorite()
             .doOnSubscribe { _state.value = FavoriteTheaterState.ShowLoading }
-            .doAfterTerminate { _state.value = FavoriteTheaterState.HideLoading }
+            .doAfterTerminate {
+                _state.value = FavoriteTheaterState.HideLoading
+                IdleResources.idleResources = IdleResources.DECREMENT_IDLE_RESOURCES
+            }
             .subscribe({
-                _state.value = FavoriteTheaterState.LoadFavoriteTheater(it)
-            },{
-              _state.value = FavoriteTheaterState.LoadScreenError
+                if (it.isEmpty())
+                    _state.value = FavoriteTheaterState.LoadEmptyScreen
+                else
+                    _state.value = FavoriteTheaterState.LoadFavoriteTheater(it)
+            }, {
+                _state.value = FavoriteTheaterState.LoadScreenError
             })
     }
 }
