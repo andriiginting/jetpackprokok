@@ -32,7 +32,7 @@ class DetailScreenActivity : BaseActivity() {
     private var movieSimilar: List<MovieItem>? = listOf()
 
     private lateinit var vm: TheaterDetailViewModel
-    private lateinit var screenType: String
+    private var screenType: String? = ""
     private var isFavoriteTheater = false
     private var data: MovieItem? = null
 
@@ -60,10 +60,10 @@ class DetailScreenActivity : BaseActivity() {
 
     private fun initData() {
         setupAdapter()
-        vm.isFavoriteTheater(data?.id.orEmpty())
+        vm.isFavoriteTheater(data?.id ?: "0")
         when (screenType) {
-            MOVIE_TYPE -> vm.getSimilarMovie(data?.id.orEmpty())
-            TV_TYPE -> vm.getSimilarTv(data?.id.orEmpty())
+            MOVIE_TYPE -> vm.getSimilarMovie(data?.id ?: "0")
+            TV_TYPE -> vm.getSimilarTv(data?.id ?: "0")
         }
     }
 
@@ -88,7 +88,7 @@ class DetailScreenActivity : BaseActivity() {
                 vm.deleteTheaterData(it.movieId)
             }
         } else {
-            data?.let { vm.saveFavoriteTheater(it, screenType) }
+            data?.let { vm.saveFavoriteTheater(it, screenType.orEmpty()) }
         }
     }
 
