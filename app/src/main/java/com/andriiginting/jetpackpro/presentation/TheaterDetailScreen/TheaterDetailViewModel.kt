@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andriiginting.jetpackpro.base.BaseViewModel
-import com.andriiginting.jetpackpro.data.database.TheaterFavorite
 import com.andriiginting.jetpackpro.data.model.MovieItem
 import com.andriiginting.jetpackpro.data.model.MovieResponse
 import com.andriiginting.jetpackpro.data.repository.DetailScreenRepositoryContract
